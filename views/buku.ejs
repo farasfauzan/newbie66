@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Library</title>
+    <style>
+        table { width: 50%; border-collapse: collapse; margin: 20px auto; font-family: sans-serif; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        h1 { text-align: center; font-family: sans-serif; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Daftar Koleksi Buku</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Judul</th>
+            <th>Penulis</th>
+            <th>Action</th>
+        </tr>
+        <% dataBuku.forEach(item => { %>
+        <tr>
+            <td><%= item.id %></td>
+            <td><%= item.judul %></td>
+            <td><%= item.penulis %></td>
+            <td>
+            <a href="/hapus-buku/<%= item.id %>" 
+               style="color: red; text-decoration: none; font-weight: bold;"
+               onclick="return confirm('Yakin mau hapus buku ini?')">
+               Hapus
+            </a>
+        </td>
+        </tr>
+        <% }); %>
+        <div style="text-align: center; margin-bottom: 30px;">
+    <h3>Tambah Buku Baru</h3>
+    <form action="/tambah-buku" method="POST">
+        <input type="text" name="judul" placeholder="Judul Buku" required>
+        <input type="text" name="penulis" placeholder="Nama Penulis" required>
+        <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Simpan</button>
+    </form>
+</div>
+    </table>
+</body>
+</html>
