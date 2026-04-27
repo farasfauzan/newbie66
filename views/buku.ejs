@@ -1,45 +1,164 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Library</title>
+    <title>Smart Library Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        table { width: 50%; border-collapse: collapse; margin: 20px auto; font-family: sans-serif; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        h1 { text-align: center; font-family: sans-serif; color: #333; }
+        /* Background gradient yang kalem */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            margin: 0;
+            padding: 50px 20px;
+            color: #1d1d1f;
+            min-height: 100vh;
+        }
+
+        /* Efek Glassmorphism (Kaca) */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            letter-spacing: -0.05em;
+        }
+
+        /* Form styling yang smooth */
+        .form-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        input {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid #d2d2d7;
+            background: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+        }
+
+        /* Tombol ala iOS */
+        button {
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0077ed;
+            transform: scale(1.05); /* Efek membesar halus */
+        }
+
+        /* Tabel modern */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        th {
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Efek hover pada baris tabel */
+        tr {
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Link Action yang rapi */
+        .action-link {
+            text-decoration: none;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn { color: #f56300; background: rgba(245, 99, 0, 0.1); }
+        .edit-btn:hover { background: rgba(245, 99, 0, 0.2); }
+
+        .delete-btn { color: #ff3b30; background: rgba(255, 59, 48, 0.1); margin-left: 8px; }
+        .delete-btn:hover { background: rgba(255, 59, 48, 0.2); }
+
     </style>
 </head>
 <body>
-    <h1>Daftar Koleksi Buku</h1>
 
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h3>Tambah Buku Baru</h3>
-        <form action="/tambah-buku" method="POST">
-            <input type="text" name="judul" placeholder="Judul Buku" required>
-            <input type="text" name="penulis" placeholder="Nama Penulis" required>
-            <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Simpan</button>
+<div class="container">
+    <h1>Smart Library</h1>
+
+    <div class="form-group">
+        <form action="/tambah-buku" method="POST" style="display: flex; gap: 10px; width: 100%; justify-content: center;">
+            <input type="text" name="judul" placeholder="Judul Buku" required style="flex: 1; max-width: 300px;">
+            <input type="text" name="penulis" placeholder="Nama Penulis" required style="flex: 1; max-width: 300px;">
+            <button type="submit">Tambah</button>
         </form>
     </div>
 
     <table>
         <tr>
             <th>ID</th>
-            <th>Judul</th>
+            <th>Judul Buku</th>
             <th>Penulis</th>
-            <th>Action</th>
+            <th style="text-align: center;">Aksi</th>
         </tr>
         <% dataBuku.forEach(item => { %>
         <tr>
-            <td><%= item.id %></td>
-            <td><%= item.judul %></td>
+            <td style="color: #86868b; font-weight: 600;">#<%= item.id %></td>
+            <td style="font-weight: 600;"><%= item.judul %></td>
             <td><%= item.penulis %></td>
-            <td>
-                <a href="/edit-buku/<%= item.id %>" style="color: orange; text-decoration: none; font-weight: bold; margin-right: 10px;">Edit</a>
-                <a href="/hapus-buku/<%= item.id %>" style="color: red; text-decoration: none; font-weight: bold;" onclick="return confirm('Yakin?')">Hapus</a>
+            <td style="text-align: center;">
+                <a href="/edit-buku/<%= item.id %>" class="action-link edit-btn">Edit</a>
+                <a href="/hapus-buku/<%= item.id %>" class="action-link delete-btn" onclick="return confirm('Yakin ingin menghapus buku ini?')">Hapus</a>
             </td>
         </tr>
         <% }); %>
     </table>
+</div>
 
 </body>
 </html>
