@@ -11,6 +11,16 @@
 </head>
 <body>
     <h1>Daftar Koleksi Buku</h1>
+
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h3>Tambah Buku Baru</h3>
+        <form action="/tambah-buku" method="POST">
+            <input type="text" name="judul" placeholder="Judul Buku" required>
+            <input type="text" name="penulis" placeholder="Nama Penulis" required>
+            <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Simpan</button>
+        </form>
+    </div>
+
     <table>
         <tr>
             <th>ID</th>
@@ -24,22 +34,12 @@
             <td><%= item.judul %></td>
             <td><%= item.penulis %></td>
             <td>
-            <a href="/hapus-buku/<%= item.id %>" 
-               style="color: red; text-decoration: none; font-weight: bold;"
-               onclick="return confirm('Yakin mau hapus buku ini?')">
-               Hapus
-            </a>
-        </td>
+                <a href="/edit-buku/<%= item.id %>" style="color: orange; text-decoration: none; font-weight: bold; margin-right: 10px;">Edit</a>
+                <a href="/hapus-buku/<%= item.id %>" style="color: red; text-decoration: none; font-weight: bold;" onclick="return confirm('Yakin?')">Hapus</a>
+            </td>
         </tr>
         <% }); %>
-        <div style="text-align: center; margin-bottom: 30px;">
-    <h3>Tambah Buku Baru</h3>
-    <form action="/tambah-buku" method="POST">
-        <input type="text" name="judul" placeholder="Judul Buku" required>
-        <input type="text" name="penulis" placeholder="Nama Penulis" required>
-        <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 15px; border-radius: 3px; cursor: pointer;">Simpan</button>
-    </form>
-</div>
     </table>
+
 </body>
 </html>

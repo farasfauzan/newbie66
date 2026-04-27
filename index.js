@@ -55,8 +55,29 @@ app.get('/hapus-buku/:id', (req, res) => {
         if (err) throw err;
         console.log(`Buku dengan ID ${idBuku} berhasil dihapus`);
         res.redirect('/buku'); // Balik lagi ke daftar buku
+
+         });
+});
+
+        // 1. Menampilkan form edit dengan data lama
+app.get('/edit-buku/:id', (req, res) => {
+    const id = req.params.id;
+    connection.query('SELECT * FROM buku WHERE id = ?', [id], (err, results) => {
+        if (err) throw err;
+        res.render('edit', { buku: results[0] });
     });
 });
+
+// 2. Memproses perubahan data (Update)
+app.post('/update-buku/:id', (req, res) => {
+    const id = req.params.id;
+    const { judul, penulis } = req.body;
+    connection.query('UPDATE buku SET judul = ?, penulis = ? WHERE id = ?', [judul, penulis, id], (err) => {
+        if (err) throw err;
+        res.redirect('/buku');
+    });
+});
+   
 app.listen(port, () => {
   console.log(`Server jalan di http://localhost:${port}`);
 });
